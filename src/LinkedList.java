@@ -1,18 +1,17 @@
 public class LinkedList {
-    Node head = null;
-    // Ich will head standardmaessig auf `null` setzen, aber einen constructor haben, an den ich `head` uebergeben kann.
-    // Warum funktioniert der folgende Code nicht? Wenn ich aus `Main` `new LinkedList()` aufrufe, wird ein Argument verlangt.
-    // Sollte nicht `head` `null` sein, wenn ich kein Argument übergebe?
-//    LinkedList(Node head) {
-//        this.head = head;
-//    }
+    private Node head;
+    private int listSize;
 
-    // Class constructor, der head null zuweist: das obige Problem besteht trotzdem weiter.
-//    static {
-//        head = null;
-//    }
+    public LinkedList() {
+        head = null;
+        listSize = 0;
+    }
 
-    void addNode(int value) {
+    public LinkedList(Node head) {
+        this.head = head;
+    }
+
+    public void add(int value) {
         Node newNode = new Node(value);
         Node node = this.head;
 
@@ -23,18 +22,85 @@ public class LinkedList {
                 node = node.next;
             }
 
-            // Now, we are at the last node. Add newNode here.
             node.next = newNode;
         }
-
+        listSize++;
         // Later: Implement add method using tail
     }
 
+    public void remove(int value) {
+        Node currentNode = this.head;
+        Node previousNode = this.head;
+
+        while (currentNode != null) {
+            if (currentNode.value == value) {
+                if (currentNode == this.head) {
+                    this.head = currentNode.next;
+                    listSize--;
+                    return;
+                } else {
+                    previousNode.next = currentNode.next;
+                    listSize--;
+                    return;
+                }
+            } else {
+                if (currentNode != this.head) {
+                    previousNode = previousNode.next;
+                }
+                currentNode = currentNode.next;
+            }
+        }
+    }
+
+    public int getListSize() {
+        return listSize;
+    }
+
+    public void printList() {
+        Node currentNode = this.head;
+        System.out.print("Linked list: ");
+        while (currentNode != null) {
+            if (currentNode.next != null) {
+                System.out.print(currentNode.value + " - ");
+            } else {
+                System.out.print(currentNode.value + "\n");
+            }
+            currentNode = currentNode.next;
+        }
+    }
+
+    public int get(int position) {
+        int listSize = getListSize();
+        if (position >= listSize) {
+            return -1;  // later: implement invalid argument exception
+        }
+
+        int pointer = 0; // Assuming that positions are counted from 0 onward
+        Node currentNode = this.head;
+
+        while (currentNode != null) {
+            if (pointer == position) {
+                return currentNode.value;
+            }
+            pointer++;
+            currentNode = currentNode.next;
+        }
+        return -1; // later: implement invalid argument exception
+    }
 
     @Override
     public String toString() {
         return "LinkedList{" +
                 "head=" + head +
                 '}';
+    }
+
+    public class Node {
+        private int value;
+        private Node next;
+
+        Node(int value) {
+            this.value = value;
+        }
     }
 }
