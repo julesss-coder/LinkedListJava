@@ -72,10 +72,10 @@ public class LinkedList {
     public int get(int position) {
         int listSize = getListSize();
         if (position >= listSize) {
-            return -1;  // later: implement invalid argument exception
+            throw new IllegalArgumentException("Position is greater than number of list nodes.");
         }
 
-        int pointer = 0; // Assuming that positions are counted from 0 onward
+        int pointer = 0;
         Node currentNode = this.head;
 
         while (currentNode != null) {
@@ -85,7 +85,7 @@ public class LinkedList {
             pointer++;
             currentNode = currentNode.next;
         }
-        return -1; // later: implement invalid argument exception
+        throw new IllegalArgumentException();
     }
 
     @Override
