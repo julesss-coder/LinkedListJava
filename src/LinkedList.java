@@ -1,5 +1,5 @@
-public class LinkedList {
-    private Node head;
+public class LinkedList<T> {
+    private Node<T> head;
     private int listSize;
 
     public LinkedList() {
@@ -7,13 +7,13 @@ public class LinkedList {
         listSize = 0;
     }
 
-    public LinkedList(Node head) {
+    public LinkedList(Node<T> head) {
         this.head = head;
     }
 
-    public void add(int value) {
-        Node newNode = new Node(value);
-        Node node = this.head;
+    public void add(T value) {
+        Node<T> newNode = new Node<>(value);
+        Node<T> node = this.head;
 
         if (node == null) {
             this.head = newNode;
@@ -28,9 +28,9 @@ public class LinkedList {
         // Later: Implement add method using tail
     }
 
-    public void remove(int value) {
-        Node currentNode = this.head;
-        Node previousNode = this.head;
+    public void remove(T value) {
+        Node<T> currentNode = this.head;
+        Node<T> previousNode = this.head;
 
         while (currentNode != null) {
             if (currentNode.value == value) {
@@ -57,7 +57,7 @@ public class LinkedList {
     }
 
     public void printList() {
-        Node currentNode = this.head;
+        Node<T> currentNode = this.head;
         System.out.print("Linked list: ");
         while (currentNode != null) {
             if (currentNode.next != null) {
@@ -69,14 +69,14 @@ public class LinkedList {
         }
     }
 
-    public int get(int position) {
+    public T get(int position) {
         int listSize = getListSize();
         if (position >= listSize) {
             throw new IllegalArgumentException("Position is greater than number of list nodes.");
         }
 
         int pointer = 0;
-        Node currentNode = this.head;
+        Node<T> currentNode = this.head;
 
         while (currentNode != null) {
             if (pointer == position) {
@@ -95,11 +95,11 @@ public class LinkedList {
                 '}';
     }
 
-    public class Node {
-        private int value;
-        private Node next;
+    public class Node<T> {
+        private T value;
+        private Node<T> next;
 
-        Node(int value) {
+        Node(T value) {
             this.value = value;
         }
     }
