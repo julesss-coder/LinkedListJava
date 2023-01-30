@@ -30,25 +30,25 @@ public class LinkedList<T> {
 
     public void remove(T value) {
         Node<T> currentNode = this.head;
-        Node<T> previousNode = this.head;
+        Node<T> previousNode = null;
 
-        while (currentNode != null) {
-            if (currentNode.value == value) {
-                if (currentNode == this.head) {
-                    this.head = currentNode.next;
-                    listSize--;
-                    return;
-                } else {
-                    previousNode.next = currentNode.next;
-                    listSize--;
-                    return;
-                }
+        if (listSize == 1) {
+            this.head = null;
+            listSize--;
+        }
+
+        while (currentNode != null && currentNode.value != value) {
+            previousNode = currentNode;
+            currentNode = currentNode.next;
+        }
+
+        if (currentNode != null) {
+            if (currentNode == this.head) {
+                this.head = currentNode.next;
             } else {
-                if (currentNode != this.head) {
-                    previousNode = previousNode.next;
-                }
-                currentNode = currentNode.next;
+                previousNode.next = currentNode.next;
             }
+            listSize--;
         }
     }
 
